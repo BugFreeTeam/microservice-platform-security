@@ -1,6 +1,7 @@
 package com.platform.security.security;
 
 import com.anjuxing.platform.common.base.JsonResult;
+import com.anjuxing.platform.common.util.JsonResultUtils;
 import com.anjuxing.platform.common.util.JsonUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -16,15 +17,11 @@ import java.io.IOException;
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
-        JsonResult jsonResult=new JsonResult();
-        jsonResult.setMessage(e.getMessage());
-        jsonResult.setResult(JsonResult.FAILURE);
-        jsonResult.setCode("403");
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Cache-Control","no-cache");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        response.getWriter().println(JsonUtils.beanToJson(jsonResult));
+        response.getWriter().println(JsonUtils.beanToJson(JsonResultUtils.error("004","该用户无此权限，请联系管理员")));
         response.getWriter().flush();
     }
 }
