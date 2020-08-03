@@ -43,7 +43,6 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 }
             }
         }
-        System.out.println("token验证成功");
         chain.doFilter(request, response);
     }
 }
